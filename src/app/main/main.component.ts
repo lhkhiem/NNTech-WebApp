@@ -11,10 +11,10 @@ export class MainComponent implements OnInit, AfterViewInit {
   constructor(private elementRef: ElementRef) {
   }
   ngAfterViewInit(): void {
-    // var s = document.createElement("script");
-    // s.type = "text/javascript";
-    // s.src = "../../assets/js/demo.js";
-    // this.elementRef.nativeElement.appendChild(s);
+    var s = document.createElement("script");
+    s.type = "text/javascript";
+    s.src = "../../assets/js/demo.js";
+    this.elementRef.nativeElement.appendChild(s);
   }
   ngOnInit(): void {
   }
