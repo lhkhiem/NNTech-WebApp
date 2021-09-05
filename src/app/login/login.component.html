@@ -1,1 +1,68 @@
-<p>login works!</p>
+<div class="hold-transition login-page">
+  <div class="login-box">
+    <div class="login-logo">
+      <img  src="../../assets/img/NNTECH-logo.png" style="width:150px"/>
+    </div>
+    <!-- /.login-logo -->
+    <div class="card">
+      <div class="card-body login-card-body">
+        <p class="login-box-msg">Đăng nhập để bắt đầu phiên của bạn</p>
+
+        <form name="fLogin" #f="ngForm" (ngSubmit)="f.form.valid && login(f)" novalidate>
+          <div class="input-group mb-3" [ngClass]="{'has-error':f.submitted && !username.valid}">
+            <input type="text" class="form-control" placeholder="Tên đăng nhập" name="username" [(ngModel)]="model.username" #username="ngModel" required>
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-user"></span>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="f.submitted && !username.valid" class=" alert alert-danger">Ten dang nhap yeu cau</div>
+          <div class="input-group mb-3">
+            <input type="password" class="form-control" placeholder="Mật khẩu" name="password" [(ngModel)]="model.password" #password="ngModel" required>
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="f.submitted && !password.valid" class="alert alert-danger">Mật khẩu được yêu cầu</div>
+          <div class="row">
+            <div class="col-8">
+              <div class="icheck-primary">
+                <input type="checkbox" id="remember">
+                <label for="remember">
+                  Ghi nhớ
+                </label>
+              </div>
+            </div>
+            <!-- /.col -->
+            <div class="col-4">
+              <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </div>
+            <!-- /.col -->
+          </div>
+        </form>
+
+        <div class="social-auth-links text-center mb-3">
+          <p>- HOẶC -</p>
+          <a href="#" class="btn btn-block btn-primary">
+            <i class="fab fa-facebook mr-2"></i> Đăng nhập với Facebook
+          </a>
+          <a href="#" class="btn btn-block btn-danger">
+            <i class="fab fa-google-plus mr-2"></i> Đăng nhập với Google+
+          </a>
+        </div>
+        <!-- /.social-auth-links -->
+
+        <p class="mb-1">
+          <a href="#">Quên mật khẩu</a>
+        </p>
+        <p class="mb-0">
+          <a href="#" class="text-center">Đăng ký thành viên</a>
+        </p>
+      </div>
+      <!-- /.login-card-body -->
+    </div>
+  </div>
+</div>

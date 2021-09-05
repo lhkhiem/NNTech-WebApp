@@ -4,15 +4,13 @@ import { RouterModule } from '@angular/router';
 import { MainRoutes } from './main.routes';
 import { MainComponent } from './main.component';
 
-
-
 @NgModule({
   declarations: [
-    MainComponent
+    MainComponent,
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(MainRoutes)
+    RouterModule.forChild(MainRoutes),
   ]
 })
 export class MainModule { }
