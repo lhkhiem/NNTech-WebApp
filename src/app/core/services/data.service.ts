@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 import { MessageContstants } from '../common/message.constants';
 import { SystemConstants } from '../common/system.constants';
 import { AuthenService } from './authen.service';
-import { NotificationService } from './notification.service';
+import { NotifyService } from './notify.service';
 import { UtilityService } from './utility.service';
 
 @Injectable({
@@ -19,10 +19,10 @@ export class DataService {
     private _authenService: AuthenService,
     private _http: HttpClient,
     private _router: Router,
-    private _notificationService: NotificationService,
+    private _notifyService: NotifyService,
     private _utilityService: UtilityService) {
     this.headers = this.headers.set('Content-Type', 'application/json');
-    this.headers = this.headers.set("Authorization", "Bearer " + _authenService.getLoggedInUser().tokenString);
+    //this.headers = this.headers.set("Authorization", "Bearer " + _authenService.getLoggedInUser().tokenString);
   }
 
 
@@ -61,20 +61,25 @@ export class DataService {
     return this._http.post(environment.BASE_API + uri, data, { headers: newHeader })
       .pipe(catchError(this.handleError));
   }
-  private handleError(error: HttpErrorResponse) {
-    if (error.status === 401) {
+  public  handleError(error: HttpErrorResponse) {
+    if (error.status === 400) {
       localStorage.removeItem(SystemConstants.CURRENT_USER);
-      this._notificationService.printErrorMessage(MessageContstants.LOGIN_AGAIN_MSG);
+      this._notifyService.notifyError(MessageContstants.LOGIN_AGAIN_MSG,'Lỗi');
+      this._utilityService.navigateToLogin();
+    }
+    else if (error.status === 401) {
+      localStorage.removeItem(SystemConstants.CURRENT_USER);
+      this._notifyService.notifyError(MessageContstants.LOGIN_AGAIN_MSG,'Lỗi');
       this._utilityService.navigateToLogin();
     }
     else if (error.status === 403) {
       localStorage.removeItem(SystemConstants.CURRENT_USER);
-      this._notificationService.printErrorMessage(MessageContstants.FORBIDDEN);
+      this._notifyService.notifyError(MessageContstants.FORBIDDEN,'Lỗi');
       this._utilityService.navigateToLogin();
     }
     else {
       let errMsg = JSON.parse(error.error).Message;
-      this._notificationService.printErrorMessage(errMsg);
+      this._notifyService.notifyError(errMsg,'Lỗi');
     }
     return throwError(
       'Một số lỗi không xác định đã xảy ra');

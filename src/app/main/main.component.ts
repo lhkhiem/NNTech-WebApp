@@ -1,4 +1,7 @@
 import { Component, OnInit, AfterViewInit, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
+import { SystemConstants } from '../core/common/system.constants';
+import { UrlConstants } from '../core/common/url.constants';
 
 @Component({
   selector: 'app-main',
@@ -8,7 +11,8 @@ import { Component, OnInit, AfterViewInit, ElementRef } from '@angular/core';
 
 export class MainComponent implements OnInit, AfterViewInit {
 
-  constructor(private elementRef: ElementRef) {
+  constructor(private elementRef: ElementRef,private router: Router) {
+    
   }
   ngAfterViewInit(): void {
     var s = document.createElement("script");
@@ -17,6 +21,11 @@ export class MainComponent implements OnInit, AfterViewInit {
     this.elementRef.nativeElement.appendChild(s);
   }
   ngOnInit(): void {
+  }
+  logout(){
+    localStorage.removeItem(SystemConstants.CURRENT_USER);
+    //chuyen huong ve home
+    this.router.navigate([UrlConstants.LOGIN]);
   }
 
 }

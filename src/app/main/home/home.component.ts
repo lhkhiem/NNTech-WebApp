@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+import { NotifyService } from 'src/app/core/services/notify.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private notify: NotifyService ) { 
+  }
 
   ngOnInit(): void {
   }
-
+  showSuccess() {
+    this.notify.notifyError('Hello world!', 'Toastr fun!');
+  }
+  public addNew():any{
+    this.showSuccess();
+  }
 }

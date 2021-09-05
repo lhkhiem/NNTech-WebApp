@@ -10,7 +10,8 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { LoginModule } from './login/login.module';
 import { MainModule } from './main/main.module';
 
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 @NgModule({
   declarations: [
     AppComponent
@@ -21,7 +22,9 @@ import { MainModule } from './main/main.module';
     LoginModule,
     MainModule,
     HttpClientModule,
-    
+    FormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(), 
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]

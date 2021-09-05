@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SystemConstants } from '../common/system.constants';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class AuthenService {
   login(username: string, password: string): Observable<any> {
     const body = {
       'userName': encodeURIComponent(username),
-      'password': encodeURIComponent(password)
+      'password': password//encodeURIComponent(password)
     }
 
     let httpOptions = {
@@ -22,11 +23,9 @@ export class AuthenService {
       })
     }
 
-    return this._http.post<any>(SystemConstants.BASE_API +
-      '/api/users/authenticate', body, httpOptions)
+    return this._http.post<any>(environment.BASE_API +
+      '/api/user/authenticate', body, httpOptions)
       .pipe();
-
-
   }
   logout() {
     localStorage.removeItem(SystemConstants.CURRENT_USER);

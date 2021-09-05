@@ -6,27 +6,33 @@
     <!-- /.login-logo -->
     <div class="card">
       <div class="card-body login-card-body">
-        <p class="login-box-msg">Đăng nhập để bắt đầu phiên của bạn</p>
+        <p *ngIf="fLogin.valid" class="login-box-msg">Đăng nhập để bắt đầu phiên của bạn</p>
+        <ul class="error-message">
+          <li *ngIf="username.invalid">Tên đăng nhập bắc buộc</li>
+          <li *ngIf="password.invalid">Mật khẩu bắc buộc</li>
+          <li *ngIf="password.errors?.minlength">Mật khẩu ít nhất 8 ký tự</li>
+          <li *ngIf="password.errors?.pattern">Mật khẩu ít nhất 1 ký tự viết hoa, viết thường và ký tự đặc biệt</li>
+        </ul> 
 
-        <form name="fLogin" #f="ngForm" (ngSubmit)="f.form.valid && login(f)" novalidate>
-          <div class="input-group mb-3" [ngClass]="{'has-error':f.submitted && !username.valid}">
-            <input type="text" class="form-control" placeholder="Tên đăng nhập" name="username" [(ngModel)]="model.username" #username="ngModel" required>
+        <form [formGroup]="fLogin" (ngSubmit)="fLogin.valid && login()">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" formControlName="username" placeholder="Tên đăng nhập">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-user"></span>
               </div>
             </div>
           </div>
-          <div *ngIf="f.submitted && !username.valid" class=" alert alert-danger">Ten dang nhap yeu cau</div>
+          
           <div class="input-group mb-3">
-            <input type="password" class="form-control" placeholder="Mật khẩu" name="password" [(ngModel)]="model.password" #password="ngModel" required>
+            <input type="password" class="form-control" formControlName="password" placeholder="Mật khẩu">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
               </div>
             </div>
           </div>
-          <div *ngIf="f.submitted && !password.valid" class="alert alert-danger">Mật khẩu được yêu cầu</div>
+
           <div class="row">
             <div class="col-8">
               <div class="icheck-primary">
