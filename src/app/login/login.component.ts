@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
     //Khai báo form được map từ html
     this.fLogin = new FormGroup({
       'username': new FormControl('admin', Validators.required),
-      'password': new FormControl('Admin@123',
+      'password': new FormControl('Abcd@1234',
         [
           Validators.required,
           Validators.minLength(8),
@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
             //this.notify.notifySuccess(data.message, '');
             //set token vao localstored
             localStorage.removeItem(SystemConstants.CURRENT_USER);
-            localStorage.setItem(SystemConstants.CURRENT_USER, JSON.stringify(data.token));
+            localStorage.setItem(SystemConstants.CURRENT_USER, data.token);
             //chuyen huong ve home
             this.router.navigate([UrlConstants.HOME]);
           }

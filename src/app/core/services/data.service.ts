@@ -1,6 +1,5 @@
 import { HttpClient,  HttpErrorResponse,  HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -18,16 +17,14 @@ export class DataService {
   constructor(
     private _authenService: AuthenService,
     private _http: HttpClient,
-    private _router: Router,
     private _notifyService: NotifyService,
     private _utilityService: UtilityService) {
     this.headers = this.headers.set('Content-Type', 'application/json');
-    //this.headers = this.headers.set("Authorization", "Bearer " + _authenService.getLoggedInUser().tokenString);
+    this.headers = this.headers.set("Authorization", "Bearer "+_authenService.getLoggedInUser());
   }
 
 
   get(uri: string) {
-
     return this._http.get(environment.BASE_API + uri, { headers: this.headers })
       .pipe(catchError(this.handleError));
   }
@@ -57,7 +54,7 @@ export class DataService {
   }
   postFile(uri: string, data?: any) {
     let newHeader = new HttpHeaders();
-    newHeader.set("Authorization", "Bearer " + this._authenService.getLoggedInUser().access_token);
+    newHeader.set("Authorization", "Bearer " + this._authenService.getLoggedInUser());
     return this._http.post(environment.BASE_API + uri, data, { headers: newHeader })
       .pipe(catchError(this.handleError));
   }
@@ -67,10 +64,10 @@ export class DataService {
       this._notifyService.notifyError(MessageContstants.LOGIN_AGAIN_MSG,'Lỗi');
       this._utilityService.navigateToLogin();
     }
-    else if (error.status === 401) {
-      localStorage.removeItem(SystemConstants.CURRENT_USER);
-      this._notifyService.notifyError(MessageContstants.LOGIN_AGAIN_MSG,'Lỗi');
-      this._utilityService.navigateToLogin();
+    else if (error.status === 401) {//Lỗi xác thực người dùng
+      //localStorage.removeItem(SystemConstants.CURRENT_USER);
+      //this._notifyService.notifyError("MessageContstants.LOGIN_AGAIN_MSG",'Lỗi');
+      //this._utilityService.navigateToLogin();
     }
     else if (error.status === 403) {
       localStorage.removeItem(SystemConstants.CURRENT_USER);

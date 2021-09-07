@@ -127,7 +127,7 @@
         </li>
         <!-- Full screen -->
         <li class="nav-item">
-          <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+          <a class="nav-link" data-widget="fullscreen"  role="button">
             <i class="fas fa-expand-arrows-alt"></i>
           </a>
         </li>
@@ -175,10 +175,10 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="/" class="brand-link">
-        <img src="../assets/img/NNTECH-logo.png" alt="AdminLTE" class="brand-image img-circle elevation-3"
+      <a routerLink="home" routerLinkActive="active" class="brand-link">
+        <img src="../assets/img/NNTECH-logo.png" alt="NNTech" class="brand-image img-circle elevation-3"
           style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE</span>
+        <span class="brand-text font-weight-light">NNTech</span>
       </a>
 
       <!-- Sidebar -->
@@ -186,95 +186,92 @@
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-          <ul class="nav nav-pills nav-sidebar flex-column nav-flat" data-widget="treeview" role="menu"
+          <ul class="nav nav-pills nav-sidebar flex-column nav-legacy" data-widget="treeview" role="menu"
             data-accordion="false">
-            <!-- Add icons to the links using the .nav-icon class
-                 with font-awesome or any other icon font library -->
+           
+            <li class="nav-header">HỆ THỐNG</li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
+              <a routerLink="" class="nav-link">
+                <i class="nav-icon fas fa-home"></i>
                 <p>
-                  Dashboard
-                  <i class="right fas fa-angle-left"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href=".index.html" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Dashboard v1</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/node_modules/admin-lte/index2.html" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Dashboard v2</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/node_modules/admin-lte/index3.html" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Dashboard v3</p>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-header">EXAMPLES</li>
-            <li class="nav-item">
-              <a href="../calendar.html" class="nav-link">
-                <i class="nav-icon far fa-calendar-alt"></i>
-                <p>
-                  Calendar
+                  Thông tin chung
                   <span class="badge badge-info right">2</span>
                 </p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="../gallery.html" class="nav-link">
+              <a routerLink="/" class="nav-link">
                 <i class="nav-icon far fa-image"></i>
                 <p>
-                  Gallery
+                  Quản lý ảnh
                 </p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="../kanban.html" class="nav-link">
-                <i class="nav-icon fas fa-columns"></i>
+            <li class="nav-header">CHỨC NĂNG</li>
+            <li class="nav-item menu-is-opening menu-open">
+              <a  class="nav-link">
+                <i class="nav-icon fas fa-user"></i>
                 <p>
-                  Kanban Board
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon far fa-envelope"></i>
-                <p>
-                  Mailbox
+                  TÀI KHOẢN NGƯỜI DÙNG
                   <i class="fas fa-angle-left right"></i>
                 </p>
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="../mailbox/mailbox.html" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Inbox</p>
+                  <a routerLink="user" routerLinkActive="active" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Người dùng</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="../mailbox/compose.html" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Compose</p>
+                  <a routerLink="home" routerLinkActive="active" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Nhóm quyền</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="../mailbox/read-mail.html" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Read</p>
+                  <a routerLink="permision" routerLinkActive="active" class="nav-link">
+                    <i class="fas fa-angle-right nav-icon"></i>
+                    <p>Phân quyền</p>
                   </a>
                 </li>
               </ul>
             </li>
-
+            <li class="nav-item menu-is-opening menu-open">
+              <a class="nav-link">
+                <i class="nav-icon fas fa-chart-pie"></i>
+                <p>
+                  BÁO CÁO
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="#" class="nav-link" >
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>ChartJS</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="../charts/flot.html" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Flot</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="../charts/inline.html" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Inline</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="../charts/uplot.html" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>uPlot</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
           </ul>
         </nav>
         <!-- /.sidebar-menu -->

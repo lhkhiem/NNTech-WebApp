@@ -9,8 +9,7 @@ export const MainRoutes: Routes = [
         , children: [
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: HomeComponent, canActivate:[AuthGuard] },
-            //{ path: '**',component:ErrorComponent }
-            // { path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule) },
+            { path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule) },
             // { path: 'role', loadChildren: () => import('./role/role.module').then(m => m.RoleModule) }
         ]
     }

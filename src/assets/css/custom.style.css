@@ -1,0 +1,17 @@
+.fix-content{
+    padding: 5px;
+}
+.table th{
+    background-color: #343a40;
+    color: whitesmoke;
+}
+.table td {
+    padding: .25rem !important;
+}
+
+
+[class*=sidebar-dark] .nav-legacy .nav-treeview>.nav-item>.nav-link.active, 
+[class*=sidebar-dark] .nav-legacy .nav-treeview>.nav-item>.nav-link:focus, 
+[class*=sidebar-dark] .nav-legacy .nav-treeview>.nav-item>.nav-link:hover {
+    color: #28a745 !important;
+}

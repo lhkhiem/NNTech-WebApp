@@ -31,10 +31,24 @@ export class AuthenService {
     localStorage.removeItem(SystemConstants.CURRENT_USER);
   }
   isUserAuthenticated(): boolean {
-    return true;
+    const user = localStorage.getItem(SystemConstants.CURRENT_USER);
+    if (user != null) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
-  getLoggedInUser(): any {
-    return null;
+  getLoggedInUser():any{
+    if (this.isUserAuthenticated()) {
+      //var token = JSON.parse(localStorage.getItem(SystemConstants.CURRENT_USER));
+      var token = localStorage.getItem(SystemConstants.CURRENT_USER);
+      
+    }
+    else {
+      token =null;
+    }
+    return token;
   }
 
 
