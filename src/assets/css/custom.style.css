@@ -1,17 +1,32 @@
+/* fix content layout */
 .fix-content{
     padding: 5px;
 }
+/* fix màu tiêu đề table */
 .table th{
     background-color: #343a40;
     color: whitesmoke;
 }
+/* fix chiều cao hàng trong table */
 .table td {
     padding: .25rem !important;
 }
-
-
+/* fix màu menu */
 [class*=sidebar-dark] .nav-legacy .nav-treeview>.nav-item>.nav-link.active, 
 [class*=sidebar-dark] .nav-legacy .nav-treeview>.nav-item>.nav-link:focus, 
 [class*=sidebar-dark] .nav-legacy .nav-treeview>.nav-item>.nav-link:hover {
     color: #28a745 !important;
+}
+/* fix kích thước modal */
+.modal-lg, .modal-xl {
+    max-width: 95% !important;
+}
+/* fix header & footer modal */
+.modal-header{
+    padding: .3rem 1rem !important;
+    background-color: #343a40;
+    color: whitesmoke;
+}
+.modal-footer{
+    padding: .3rem 1rem !important;
 }

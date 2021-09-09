@@ -12,7 +12,7 @@ import { NotifyService } from '../core/services/notify.service'
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+  loading = false;
   public model: any = {};
   public user: any = {};
   public fLogin: any;
@@ -44,6 +44,12 @@ export class LoginComponent implements OnInit {
   }
   //Đăng nhập
   login() {
+    //điều khiển nút loading
+    this.loading = true;
+    setTimeout(() => {
+      this.loading = false;
+     }, 4000);
+     //gọi service đăng nhập
     this.authenService.login(this.username.value, this.password.value)
       .subscribe(
         (data: any) => {
@@ -63,5 +69,6 @@ export class LoginComponent implements OnInit {
         })
 
   }
+  
 
 }

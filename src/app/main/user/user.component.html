@@ -14,7 +14,8 @@
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <button accesskey="a" type="button" class="btn btn-success btn-sm"><i class="fas fa-plus"></i>
+                <button (click)="openAddModal(template)" accesskey="a" type="button" class="btn btn-success btn-sm"><i
+                        class="fas fa-plus"></i>
                     Thêm mới
                 </button>
             </div>
@@ -38,11 +39,15 @@
                             <td>{{user.userName}}</td>
                             <td>{{user.roles}}</td>
                             <td>{{user.fullName}}</td>
-                            <td>{{user.dob  | date:'dd/MM/yyyy'}}</td>
+                            <td>{{user.dob | date:'dd/MM/yyyy'}}</td>
                             <td>{{user.phoneNumber}}</td>
                             <td> {{user.email}}</td>
                             <td>Active</td>
-                            <td>View</td>
+                            <td>
+                                <button (click)="openEditModal(template)" type="button"
+                                    class="btn btn-outline-success btn-xs"><i class="fas fa-search"></i></button>
+                                <!-- <i class="fas fa-search"></i> -->
+                            </td>
                         </tr>
 
                     </tbody>
@@ -55,3 +60,103 @@
     </section>
     <!-- /.content -->
 </div>
+<ng-template #template>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">
+            <span *ngIf="add">Thêm mới</span>
+            <span *ngIf="!add">Cập nhật</span>
+        </h4>
+        <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+            <span aria-hidden="true" class="visually-hidden">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-4">
+                <label>Họ tên</label>
+            </div>
+            <div class="col-8">
+                <input type="text" class="form-control form-control-sm" placeholder="Họ tên">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <label>Email</label>
+            </div>
+            <div class="col-8">
+                <input type="text" class="form-control form-control-sm" placeholder="Họ tên">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <label>Điện thoại</label>
+            </div>
+            <div class="col-8">
+                <input type="text" class="form-control form-control-sm" placeholder="Họ tên">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <label>Sinh nhật</label>
+            </div>
+            <div class="col-8">
+                <input type="text" class="form-control form-control-sm" placeholder="Họ tên">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <label>Tên đăng nhập</label>
+            </div>
+            <div class="col-8">
+                <input type="text" class="form-control form-control-sm" placeholder="Họ tên">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <label>Mật khẩu</label>
+            </div>
+            <div class="col-8">
+                <input type="text" class="form-control form-control-sm" placeholder="Họ tên">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <label>Nhập lại mật khẩu</label>
+            </div>
+            <div class="col-8">
+                <input type="text" class="form-control form-control-sm" placeholder="Họ tên">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <label>Nhóm quyền</label>
+            </div>
+            <div class="col-8">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Multiple</label>
+                        <select class="select2" multiple="multiple" data-placeholder="Select a State" style="width: 100%;">
+                          <option>Alabama</option>
+                          <option>Alaska</option>
+                          <option>California</option>
+                          <option>Delaware</option>
+                          <option>Tennessee</option>
+                          <option>Texas</option>
+                          <option>Washington</option>
+                        </select>
+                      </div>
+                  </div>
+
+
+            </div>
+        </div>
+        
+
+    </div>
+    <div class="modal-footer">
+        <button *ngIf="add" type="button" class="btn btn-primary btn-sm">Lưu</button>
+        <button *ngIf="!add" type="button" class="btn btn-success btn-sm">Cập nhật</button>
+        <button type="button" class="btn btn-warning btn-sm">Reset</button>
+        <button (click)="closeModal(template)" type="button" class="btn btn-danger btn-sm">Đóng</button>
+    </div>
+</ng-template>

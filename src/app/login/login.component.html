@@ -12,7 +12,7 @@
           <li *ngIf="password.invalid">Mật khẩu bắc buộc</li>
           <li *ngIf="password.errors?.minlength">Mật khẩu ít nhất 8 ký tự</li>
           <li *ngIf="password.errors?.pattern">Mật khẩu ít nhất 1 ký tự viết hoa, viết thường và ký tự đặc biệt</li>
-        </ul> 
+        </ul>
 
         <form [formGroup]="fLogin" (ngSubmit)="fLogin.valid && login()">
           <div class="input-group mb-3">
@@ -23,7 +23,7 @@
               </div>
             </div>
           </div>
-          
+
           <div class="input-group mb-3">
             <input type="password" class="form-control" formControlName="password" placeholder="Mật khẩu">
             <div class="input-group-append">
@@ -44,7 +44,10 @@
             </div>
             <!-- /.col -->
             <div class="col-4">
-              <button type="submit" class="btn btn-primary btn-block">Login</button>
+              <button type="submit" class="btn btn-primary btn-block">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm"></span>
+                Login
+              </button>
             </div>
             <!-- /.col -->
           </div>
