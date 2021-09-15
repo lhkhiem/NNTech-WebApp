@@ -30,3 +30,19 @@
 .modal-footer{
     padding: .3rem 1rem !important;
 }
+.p-multiselect{
+    /* margin-left: -8px !important; */
+    width: 306px !important;
+}
+.p-multiselect .p-multiselect-label {
+    padding: 0.2rem 0.2rem !important;
+    
+}
+/* marring button header */
+.button-maring{
+    margin-right: 10px !important;
+}
+/* fix chiều rộng cột chức năng */
+.function-with{
+    width: 146px;
+}

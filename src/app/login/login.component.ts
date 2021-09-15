@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
       'password': new FormControl('Abcd@1234',
         [
           Validators.required,
-          Validators.minLength(8),
+          Validators.minLength(6),
           Validators.pattern('(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!#^~%*?&,.<>"\'\\;:\{\\\}\\\[\\\]\\\|\\\+\\\-\\\=\\\_\\\)\\\(\\\)\\\`\\\/\\\\\\]])[A-Za-z0-9\d$@].{7,}')
         ])
     });
@@ -62,10 +62,10 @@ export class LoginComponent implements OnInit {
             this.router.navigate([UrlConstants.HOME]);
           }
           else
-            this.notify.notifyError(data.message, '');
+            this.notify.printError(data.message);
         },
         error => {
-          this.notify.notifyError('Lỗi kết nối máy chủ', '');
+          this.notify.printError('Lỗi kết nối máy chủ');
         })
 
   }

@@ -7,14 +7,16 @@ export class NotifyService {
   private options = {
     positionClass: 'toast-top-right',
     closeButton: true,
-    progressBar: true
+    progressBar: true,
+    timeOut: 2000,
   };
-  constructor(private toastr: ToastrService) { }
-
-  public notifySuccess(title: string, message: string) {
-    this.toastr.success(title, message, this.options)
+  constructor(private toastr: ToastrService) { 
   }
-  public notifyError(title: string, message: string) {
-    this.toastr.error(title, message, this.options)
+
+  public printSuccess(message: string, title?: string) {
+    this.toastr.success(message, title, this.options)
+  }
+  public printError(message: string, title?: string) {
+    this.toastr.error(message, title, this.options)
   }
 }

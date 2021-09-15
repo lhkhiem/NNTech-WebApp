@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { UserComponent } from './user.component';
-import { ModalModule } from 'ngx-bootstrap/modal';
+
 
 const userRouter: Routes = [
   { path: '', redirectTo: 'index', pathMatch: 'full' },
@@ -13,8 +13,7 @@ const userRouter: Routes = [
   declarations: [],
   imports: [
     CommonModule,
-    ModalModule.forRoot(),
-    RouterModule.forChild(userRouter)
+    RouterModule.forChild(userRouter),
   ]
 })
 export class UserModule { }

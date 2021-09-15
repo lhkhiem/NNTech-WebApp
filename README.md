@@ -7,3 +7,4 @@
 ## Admin-lte: làm giao diện
 ## ngx-toastr: làm thông báo
 ## ngx-bootstrap: làm modal
+## primeng, primeicons, thêm các file css và angular.json để sử dụng tempalte primeng

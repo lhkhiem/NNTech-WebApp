@@ -7,4 +7,6 @@ export class MessageContstants {
     public static UPDATED_OK_MSG = "Cập nhật thành công";
     public static DELETED_OK_MSG = "Xóa thành công";
     public static FORBIDDEN = "Bạn bị chặn truy cập";
+    public static VALIDATE_ERROR = "Một số trường lỗi dữ liệu không phù hợp";
+    public static SERVER_RESPONE_MSG = "Lỗi phản hồi từ máy chủ";
 }

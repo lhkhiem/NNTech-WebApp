@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
   showSuccess() {
-    this.notify.notifyError('Hello world!', 'Toastr fun!');
+    this.notify.printError('Hello world!', 'Toastr fun!');
   }
   public addNew():any{
     this.showSuccess();
