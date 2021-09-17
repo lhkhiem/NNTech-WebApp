@@ -4,8 +4,8 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { equalPassword } from 'src/app/core/helpers/Validation';
 import { NotifyService } from 'src/app/core/services/notify.service';
-import {ConfirmationService, PrimeNGConfig, MessageService} from 'primeng/api';
-import {Message} from 'primeng/api';
+import { ConfirmationService, PrimeNGConfig } from 'primeng/api';
+import { Message } from 'primeng/api';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -46,11 +46,9 @@ export class UserComponent implements OnInit {
     private dataService: DataService,
     private modalService: BsModalService,
     private notify: NotifyService,
-    private confirmationService: ConfirmationService, 
-    private primengConfig: PrimeNGConfig
+    private confirmationService: ConfirmationService,
   ) { }
   ngOnInit(): void {
-    this.primengConfig.ripple = true;
     //Khai báo form được map từ html
     this.fUser = new FormGroup({
       'fullName': new FormControl('Lê Hoàng Khiêm', Validators.required),
@@ -195,50 +193,66 @@ export class UserComponent implements OnInit {
     });
 
   }
-  
-  msgs: Message[] = [];
-  deleteItem(id:any) {
+  //Confirm dialog
+  deleteItem(id: string) {
     this.confirmationService.confirm({
-      message: 'Do you want to delete this record?',
-      header: 'Delete Confirmation',
+      message: 'Có chắc muốn xóa không?',
+      header: 'Thông báo',
       icon: 'pi pi-info-circle',
+      acceptLabel: 'Đồng ý',
+      rejectLabel: 'Hủy',
       accept: () => {
-          //this.msgs = [{severity:'info', summary:'Confirmed', detail:'Record deleted'}];
+        //console.log('đồng ý');
+        this.dataService.delete('/api/User/' + id)
+          .subscribe((response: any) => {
+            if(response.isSuccessed){
+              this.notify.printSuccess("Đã xóa thành công.");
+              this.loadData();
+            }
+            else
+            this.notify.printError("Xóa không thành công.");
+          });
+        
       },
       reject: () => {
-          //this.msgs = [{severity:'info', summary:'Rejected', detail:'You have rejected'}];
+        //console.log('Hủy');
+        this.notify.printError("Đã hủy chức năng xóa.");
       },
-      key:'dl1'
-  });
-}
+      key: 'dl1'
+    });
+  }
+
   private saveData() {
     if (this.id == undefined || null) {
       this.dataService.post('/api/User/register', JSON.stringify(this.entity))
         .subscribe((response: any) => {
-          this.loadData();
           this.closeModal();
-          this.fUser.reset();
+          this.loadData();
           this.notify.printSuccess(response.message);
+          this.fUser.reset();
           //console.log(response)
         });
     }
     else {
       this.dataService.put('/api/User/' + this.id, JSON.stringify(this.entity))
         .subscribe((response: any) => {
-          this.loadData();
           this.closeModal();
-          this.fUser.reset();
+          this.loadData();
           this.notify.printSuccess(response.message);
-          console.log('Editting')
+          this.fUser.reset();
+          //console.log('Editting')
         });
     }
+  }
+  private deleteData(id: string) {
+
   }
   formSubmit() {
     this.entity = this.fUser.value;
     //console.log("formValid", this.fUser.valid, { seletedRoles: this.role.value });
     //this.role=this.
-    console.log(this.id)
-    console.log(this.entity)
+    ///console.log(this.id)
+    //console.log(this.entity)
     this.saveData();
   }
 }

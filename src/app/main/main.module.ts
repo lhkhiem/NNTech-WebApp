@@ -4,13 +4,16 @@ import { RouterModule } from '@angular/router';
 import { MainRoutes } from './main.routes';
 import { MainComponent } from './main.component';
 import { UserComponent } from './user/user.component';
+
 import { MultiSelectModule } from 'primeng/multiselect';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { MessagesModule } from 'primeng/messages';
+
 import { ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+
+import { ConfirmationService } from 'primeng/api';
 
 
 @NgModule({
@@ -27,7 +30,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     BsDatepickerModule.forRoot(),
     CheckboxModule,
     ConfirmDialogModule,
-    MessagesModule
-  ]
+  ],
+  providers: [ConfirmationService]
 })
 export class MainModule { }

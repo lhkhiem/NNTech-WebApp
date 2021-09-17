@@ -38,9 +38,9 @@ export class DataService {
     return this._http.put(environment.BASE_API + uri, data, { headers: this.headers })
       .pipe(catchError(this.handleError.bind(this)));
   }
-  delete(uri: string, key: string, id: string) {
+  delete(uri: string) {
 
-    return this._http.delete(environment.BASE_API + uri + "/?" + key + "=" + id, { headers: this.headers })
+    return this._http.delete(environment.BASE_API + uri , { headers: this.headers })
       .pipe(catchError(this.handleError.bind(this)));
   }
   deleteWithMultiParams(uri: string, params: any) {

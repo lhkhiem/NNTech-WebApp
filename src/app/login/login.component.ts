@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     setTimeout(() => {
       this.loading = false;
-     }, 4000);
+     }, 6000);
      //gọi service đăng nhập
     this.authenService.login(this.username.value, this.password.value)
       .subscribe(

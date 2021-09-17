@@ -46,3 +46,15 @@
 .function-with{
     width: 146px;
 }
+/* fix dialog */
+.p-dialog .p-dialog-header {
+    color: #495057 !important;
+    padding: .5rem !important;
+}
+.p-button {
+
+    padding: 0.1rem .5rem !important;  
+    /* 0.5rem 1rem; */
+    font-size: 1rem;
+
+}
