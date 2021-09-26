@@ -9,7 +9,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
@@ -27,6 +27,7 @@ import { ConfirmationService } from 'primeng/api';
     ModalModule.forRoot(),
     MultiSelectModule,
     ReactiveFormsModule,
+    FormsModule,
     BsDatepickerModule.forRoot(),
     CheckboxModule,
     ConfirmDialogModule,

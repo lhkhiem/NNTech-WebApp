@@ -52,19 +52,19 @@
                             <td>{{user.userName}}</td>
                             <td> {{user.email}}</td>
                             <td>
-                                
+
                                 <button (click)="openEditModal(user.id,crudModal)" type="button"
                                     class="btn btn-outline-success btn-xs button-maring"><i
                                         class="fas fa-search"></i></button>
-                                        <button type="button"
-                                    class="btn btn-outline-success btn-xs button-maring"><i
+                                <button type="button" class="btn btn-outline-success btn-xs button-maring"><i
                                         class="fas fa-exchange-alt"></i></button>
-                                <button (click)="openEditModal(user.id,roleModal)" type="button" class="btn btn-outline-primary btn-xs button-maring"><i
+                                <button (click)="openRoleModal(user.id,roleModal)" type="button"
+                                    class="btn btn-outline-primary btn-xs button-maring"><i
                                         class="fas fa-user-lock"></i></button>
-                                <button (click)="deleteItem(user.id)" type="button" class="btn btn-outline-danger btn-xs"><i
-                                        class="fas fa-minus-circle"></i></button>
-                                        
-                                       
+                                <button (click)="deleteItem(user.id)" type="button"
+                                    class="btn btn-outline-danger btn-xs"><i class="fas fa-minus-circle"></i></button>
+
+
                             </td>
                         </tr>
 
@@ -141,7 +141,7 @@
                     <p-checkbox formControlName="sex" [binary]="true"></p-checkbox>
                 </div>
             </div>
-            <div  *ngIf="add" class="row">
+            <div *ngIf="add" class="row">
                 <div class="col-4">
                     <label>Tên đăng nhập(*)</label>
                 </div>
@@ -174,7 +174,7 @@
                     </small>
                 </div>
             </div>
-            <!-- <div class="row">
+            <!-- <div *ngIf="add" class="row">
                 <div class="col-4">
                     <label>Nhóm quyền(*)</label>
                 </div>
@@ -206,23 +206,28 @@
             <span aria-hidden="true" class="visually-hidden">&times;</span>
         </button>
     </div>
-    <form >
+    <form #fRole="ngForm" (ngSubmit)="fRoleSubmit(fRole)" novalidate>
         <div class="modal-body">
             <div class="row">
-                <div class="col-4">
-                    <label>Roles</label>
+                <div class="col-3">
+                    <label>Chọn nhóm:</label>
                 </div>
-                <div class="col-8">
-                    <p-checkbox formControlName="sex" [binary]="true"></p-checkbox>
+                <div class="col-9">
+                    <div *ngFor="let item of roles" class="d-inline p-2">
+                        <p-checkbox name="listRoles" [value]="item" [(ngModel)]="role" [inputId]="item.id"></p-checkbox>
+                        <label>{{item.name}}</label>
+                    </div>
                 </div>
             </div>
-            
+
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-success btn-sm"><i class="fa fa-save"></i> Cập nhật</button>
-            <button (click)="closeModal()" type="button" class="btn btn-danger btn-sm"><i class="fa fa-times"></i> Đóng</button>
+            <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-save"></i> Cập nhật</button>
+            <button (click)="closeModal()" type="button" class="btn btn-danger btn-sm"><i class="fa fa-times"></i>
+                Đóng</button>
         </div>
     </form>
 
 </ng-template>
-<p-confirmDialog [style]="{width: '400px'}" position="top" [baseZIndex]="10000" key="dl1" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+<p-confirmDialog [style]="{width: '400px'}" position="top" [baseZIndex]="10000" key="dl1"
+    rejectButtonStyleClass="p-button-text"></p-confirmDialog>

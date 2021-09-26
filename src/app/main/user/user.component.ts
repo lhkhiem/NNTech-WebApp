@@ -1,11 +1,10 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { DataService } from 'src/app/core/services/data.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { FormControl, Validators, FormGroup, NgForm } from '@angular/forms';
 import { equalPassword } from 'src/app/core/helpers/Validation';
 import { NotifyService } from 'src/app/core/services/notify.service';
-import { ConfirmationService, PrimeNGConfig } from 'primeng/api';
-import { Message } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -31,6 +30,7 @@ export class UserComponent implements OnInit {
 
   //Các biến cho lấy danh sách role
   public roles: any = [];
+  public role: any = [];
   public selectedRoles: any = [];
 
   //Các biến cho modal
@@ -41,6 +41,7 @@ export class UserComponent implements OnInit {
 
   //Khai báo form User
   public fUser: any;
+  public fRole: any;
 
   constructor(
     private dataService: DataService,
@@ -79,11 +80,12 @@ export class UserComponent implements OnInit {
       // [
       //   Validators.required,
       // ]),
-      //'role': new FormControl(null, Validators.required),
+      //'role': new FormControl(null),
 
     }, {
       validators: equalPassword
     });
+    
     this.loadData();
     this.loadRoles();
   }
@@ -114,9 +116,6 @@ export class UserComponent implements OnInit {
   get confirmPassword() {
     return this.fUser.get('confirmPassword');
   }
-  // get role() {
-  //   return this.fUser.get('role');
-  // }
 
   //Phương thức thay đổi validate
   changeValidate() {
@@ -124,6 +123,7 @@ export class UserComponent implements OnInit {
       this.userName.clearValidators();
       this.password.clearValidators();
       this.confirmPassword.clearValidators();
+      //this.role.clearValidators();
     }
     else {
       this.userName.setValidators(
@@ -141,6 +141,7 @@ export class UserComponent implements OnInit {
         [
           Validators.required,
         ]);
+        //this.role.setValidators(Validators.required);
     }
   }
 
@@ -156,6 +157,12 @@ export class UserComponent implements OnInit {
     this.changeValidate();
     this.modalRef = this.modalService.show(crudModal, { id: 2, class: 'modal-md' });
     this.loadUserDetail(idEdit);
+  }
+  openRoleModal(idEdit: any, roleModal: TemplateRef<any>) {
+    this.add = false;
+    //this.changeValidate();
+    this.modalRef = this.modalService.show(roleModal, { id: 3, class: 'modal-md' });
+    this.loadRoles();
   }
   closeModal() {
     this.modalRef?.hide();
@@ -191,7 +198,6 @@ export class UserComponent implements OnInit {
       this.roles = response.resultObj;
       //console.log({roles:this.roles});
     });
-
   }
   //Confirm dialog
   deleteItem(id: string) {
@@ -221,7 +227,7 @@ export class UserComponent implements OnInit {
       key: 'dl1'
     });
   }
-
+  
   private saveData() {
     if (this.id == undefined || null) {
       this.dataService.post('/api/User/register', JSON.stringify(this.entity))
@@ -244,15 +250,12 @@ export class UserComponent implements OnInit {
         });
     }
   }
-  private deleteData(id: string) {
-
-  }
   formSubmit() {
     this.entity = this.fUser.value;
-    //console.log("formValid", this.fUser.valid, { seletedRoles: this.role.value });
-    //this.role=this.
-    ///console.log(this.id)
-    //console.log(this.entity)
     this.saveData();
   }
+  fRoleSubmit(form:NgForm){
+    console.log(form.value)
+  }
+  
 }
