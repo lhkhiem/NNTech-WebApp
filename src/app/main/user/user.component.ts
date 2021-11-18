@@ -5,6 +5,10 @@ import { FormControl, Validators, FormGroup, NgForm } from '@angular/forms';
 import { equalPassword } from 'src/app/core/helpers/Validation';
 import { NotifyService } from 'src/app/core/services/notify.service';
 import { ConfirmationService } from 'primeng/api';
+interface Roles {
+  name: string,
+  selected: boolean
+}
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -13,6 +17,7 @@ import { ConfirmationService } from 'primeng/api';
 })
 
 export class UserComponent implements OnInit {
+  public loading: boolean = true;
   //Các biến cho phân trang
   public pageIndex: number = 1;
   public pageSize: number = 20;
@@ -30,8 +35,8 @@ export class UserComponent implements OnInit {
 
   //Các biến cho lấy danh sách role
   public roles: any = [];
-  public role: any = [];
-  public selectedRoles: any = [];
+  public convertRoles: Roles[] = [];
+  public selectedRoles: Roles[] = [];
 
   //Các biến cho modal
   modalRef?: BsModalRef;
@@ -56,7 +61,8 @@ export class UserComponent implements OnInit {
       'email': new FormControl('abc@gmail.com',
         [
           Validators.required,
-          Validators.email
+          Validators.email,
+          Validators.pattern(/^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/)
         ]),
       'phoneNumber': new FormControl('099999999',
         [
@@ -66,28 +72,14 @@ export class UserComponent implements OnInit {
       'dob': new FormControl(new Date, Validators.required),
       'sex': new FormControl(true),
       'userName': new FormControl('admin'),
-      // [
-      //   Validators.required,
-      //   Validators.minLength(4)
-      // ]),
-      'password': new FormControl('Abcd@1234'),
-      // [
-      //   Validators.required,
-      //   Validators.minLength(6),
-      //   Validators.pattern('(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!#^~%*?&,.<>"\'\\;:\{\\\}\\\[\\\]\\\|\\\+\\\-\\\=\\\_\\\)\\\(\\\)\\\`\\\/\\\\\\]])[A-Za-z0-9\d$@].{7,}')
-      // ]),
-      'confirmPassword': new FormControl('Abcd@1234'),
-      // [
-      //   Validators.required,
-      // ]),
-      //'role': new FormControl(null),
 
+      'password': new FormControl('Abcd@1234'),
+      'confirmPassword': new FormControl('Abcd@1234'),
     }, {
       validators: equalPassword
     });
-    
     this.loadData();
-    this.loadRoles();
+    this.loadAllRoles();
   }
 
   //Phương thức lấy giá trị từ form
@@ -123,7 +115,6 @@ export class UserComponent implements OnInit {
       this.userName.clearValidators();
       this.password.clearValidators();
       this.confirmPassword.clearValidators();
-      //this.role.clearValidators();
     }
     else {
       this.userName.setValidators(
@@ -141,7 +132,6 @@ export class UserComponent implements OnInit {
         [
           Validators.required,
         ]);
-        //this.role.setValidators(Validators.required);
     }
   }
 
@@ -160,15 +150,21 @@ export class UserComponent implements OnInit {
   }
   openRoleModal(idEdit: any, roleModal: TemplateRef<any>) {
     this.add = false;
-    //this.changeValidate();
+    this.id = idEdit;
     this.modalRef = this.modalService.show(roleModal, { id: 3, class: 'modal-md' });
-    this.loadRoles();
+    this.selectedRoles = [];
+    this.loadRoles(idEdit);
+
+
+    //console.log(idEdit);
   }
   closeModal() {
     this.modalRef?.hide();
+
   }
 
   loadData() {
+    this.loading = true;
     this.dataService.get('/api/user/paging?keyword=' + this.keywork + '&pageIndex=' + this.pageIndex + '&pageSize=' + this.pageSize)
 
       .subscribe((response: any) => {
@@ -176,6 +172,7 @@ export class UserComponent implements OnInit {
         this.pageIndex = response.resultObj.pageIndex;
         this.pageSize = response.resultObj.pageSize;
         this.totalRow = response.resultObj.totalRows;
+        this.loading = false;
       });
   }
   loadUserDetail(id: any) {
@@ -193,10 +190,32 @@ export class UserComponent implements OnInit {
         });
       });
   }
-  loadRoles() {
+  loadAllRoles() {
     this.dataService.get('/api/Role').subscribe((response: any) => {
       this.roles = response.resultObj;
-      //console.log({roles:this.roles});
+    });
+  }
+  loadRoles(userId: string) {
+    this.dataService.get('/api/user/allroles/' + userId).subscribe((response: any) => {
+      let userRoles = response.resultObj;
+      let temp: Roles[] = [];
+      this.roles.forEach((element: any) => {
+        let selected = false;
+        if (userRoles.indexOf(element.name) == -1)
+          selected = false;
+        else
+          selected = true;
+
+        let item = {
+          name: element.name,
+          selected: selected
+        }
+
+        temp.push(item);
+
+      });
+      this.convertRoles = temp;
+      this.selectedRoles = this.convertRoles.filter((x) => x.selected == true);
     });
   }
   //Confirm dialog
@@ -211,23 +230,22 @@ export class UserComponent implements OnInit {
         //console.log('đồng ý');
         this.dataService.delete('/api/User/' + id)
           .subscribe((response: any) => {
-            if(response.isSuccessed){
+            if (response.isSuccessed) {
               this.notify.printSuccess("Đã xóa thành công.");
               this.loadData();
             }
             else
-            this.notify.printError("Xóa không thành công.");
+              this.notify.printError("Xóa không thành công.");
           });
-        
+
       },
       reject: () => {
         //console.log('Hủy');
-        this.notify.printError("Đã hủy chức năng xóa.");
+        //this.notify.printError("Đã hủy chức năng xóa.");
       },
       key: 'dl1'
     });
   }
-  
   private saveData() {
     if (this.id == undefined || null) {
       this.dataService.post('/api/User/register', JSON.stringify(this.entity))
@@ -246,7 +264,6 @@ export class UserComponent implements OnInit {
           this.loadData();
           this.notify.printSuccess(response.message);
           this.fUser.reset();
-          //console.log('Editting')
         });
     }
   }
@@ -254,8 +271,31 @@ export class UserComponent implements OnInit {
     this.entity = this.fUser.value;
     this.saveData();
   }
-  fRoleSubmit(form:NgForm){
-    console.log(form.value)
+  fRoleSubmit() {
+    let roles = JSON.stringify({ roles: this.convertRoles });
+    this.dataService.put('/api/user/' + this.id + '/roles', roles)
+      .subscribe((response: any) => {
+        if (response.isSuccessed) {
+          this.notify.printSuccess(response.message);
+        }
+        else {
+          this.notify.printError("Lỗi kêt nối máy chủ.");
+        }
+      })
+    this.modalRef?.hide();
   }
-  
+  onCheckboxChange(checked: any, item: Roles) {
+    let index = this.convertRoles.findIndex(x => x.name === item.name);
+    if (index != -1) {
+      this.convertRoles[index].selected = checked.checked;
+    }
+    else {
+      this.convertRoles.push(
+        {
+          name: item.name,
+          selected: checked.checked
+        }
+      );
+    }
+  }
 }

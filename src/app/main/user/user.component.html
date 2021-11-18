@@ -9,9 +9,9 @@
             </div>
         </div><!-- /.container-fluid -->
     </section>
-
     <!-- Main content -->
-    <section class="content">
+    <p-progressBar *ngIf="loading" mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
+    <section class="content" *ngIf="!loading">
         <div class="card">
             <div class="card-header">
                 <div class="row">
@@ -31,7 +31,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <table id="example2" class="table table-bordered table-hover table-custom resizer">
+                <table id="tb-user" class="table table-bordered table-hover table-custom resizer">
                     <thead>
                         <tr>
                             <th>Họ tên</th>
@@ -55,12 +55,12 @@
 
                                 <button (click)="openEditModal(user.id,crudModal)" type="button"
                                     class="btn btn-outline-success btn-xs button-maring"><i
-                                        class="fas fa-search"></i></button>
-                                <button type="button" class="btn btn-outline-success btn-xs button-maring"><i
-                                        class="fas fa-exchange-alt"></i></button>
+                                        class="fas fa-user-edit"></i></button>
                                 <button (click)="openRoleModal(user.id,roleModal)" type="button"
                                     class="btn btn-outline-primary btn-xs button-maring"><i
                                         class="fas fa-user-lock"></i></button>
+                                <button type="button" class="btn btn-outline-warning btn-xs button-maring"><i
+                                        class="fas fa-exchange-alt"></i></button>
                                 <button (click)="deleteItem(user.id)" type="button"
                                     class="btn btn-outline-danger btn-xs"><i class="fas fa-minus-circle"></i></button>
 
@@ -76,7 +76,17 @@
             </div>
             <!-- /.card-body -->
         </div>
-
+        <div class="card">
+            <div class="card-header">
+                <b>Hướng dẫn</b>
+            </div>
+            <div class="card-body">
+                <button class="btn btn-outline-success btn-xs button-maring"><i class="fas fa-user-edit"></i></button>Cập nhật;
+                <button class="btn btn-outline-primary btn-xs button-maring"><i class="fas fa-user-lock"></i></button>Phân quyền;
+                <button class="btn btn-outline-warning btn-xs button-maring"><i class="fas fa-exchange-alt"></i></button>Đổi mật khẩu;
+                <button class="btn btn-outline-danger btn-xs button-maring"><i class="fas fa-minus-circle"></i></button>Xóa người dùng
+            </div>
+        </div>
     </section>
     <!-- /.content -->
 </div>
@@ -206,16 +216,19 @@
             <span aria-hidden="true" class="visually-hidden">&times;</span>
         </button>
     </div>
-    <form #fRole="ngForm" (ngSubmit)="fRoleSubmit(fRole)" novalidate>
+    <form #fRole="ngForm" (ngSubmit)="fRoleSubmit()" novalidate>
         <div class="modal-body">
             <div class="row">
                 <div class="col-3">
                     <label>Chọn nhóm:</label>
                 </div>
                 <div class="col-9">
-                    <div *ngFor="let item of roles" class="d-inline p-2">
-                        <p-checkbox name="listRoles" [value]="item" [(ngModel)]="role" [inputId]="item.id"></p-checkbox>
-                        <label>{{item.name}}</label>
+                    <div *ngFor="let item of convertRoles" class="d-inline p-2">
+                        <p-checkbox name="listRoles" [value]="item" [(ngModel)]="selectedRoles"
+                            (onChange)="onCheckboxChange($event,item)"></p-checkbox>
+
+                        <span>{{item.name}}</span>
+                        <!-- <input  type="checkbox" name="listRoles" group="g1" [value]="item" checked="false" [(ngModel)]="selectedRoles"> -->
                     </div>
                 </div>
             </div>

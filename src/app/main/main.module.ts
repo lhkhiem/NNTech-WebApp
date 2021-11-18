@@ -8,6 +8,7 @@ import { UserComponent } from './user/user.component';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import {ProgressBarModule} from 'primeng/progressbar';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -31,6 +32,7 @@ import { ConfirmationService } from 'primeng/api';
     BsDatepickerModule.forRoot(),
     CheckboxModule,
     ConfirmDialogModule,
+    ProgressBarModule
   ],
   providers: [ConfirmationService]
 })

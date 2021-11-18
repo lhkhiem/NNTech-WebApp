@@ -46,9 +46,6 @@ export class LoginComponent implements OnInit {
   login() {
     //điều khiển nút loading
     this.loading = true;
-    setTimeout(() => {
-      this.loading = false;
-     }, 6000);
      //gọi service đăng nhập
     this.authenService.login(this.username.value, this.password.value)
       .subscribe(
@@ -63,6 +60,7 @@ export class LoginComponent implements OnInit {
           }
           else
             this.notify.printError(data.message);
+            this.loading = false;
         },
         error => {
           this.notify.printError('Lỗi kết nối máy chủ');
