@@ -1,0 +1,60 @@
+/* fix content layout */
+.fix-content{
+    padding: 5px;
+}
+/* fix màu tiêu đề table */
+.table th{
+    background-color: #343a40;
+    color: whitesmoke;
+}
+/* fix chiều cao hàng trong table */
+.table td {
+    padding: .25rem !important;
+}
+/* fix màu menu */
+[class*=sidebar-dark] .nav-legacy .nav-treeview>.nav-item>.nav-link.active, 
+[class*=sidebar-dark] .nav-legacy .nav-treeview>.nav-item>.nav-link:focus, 
+[class*=sidebar-dark] .nav-legacy .nav-treeview>.nav-item>.nav-link:hover {
+    color: #28a745 !important;
+}
+/* fix kích thước modal */
+.modal-lg, .modal-xl {
+    max-width: 95% !important;
+}
+/* fix header & footer modal */
+.modal-header{
+    padding: .3rem 1rem !important;
+    background-color: #343a40;
+    color: whitesmoke;
+}
+.modal-footer{
+    padding: .3rem 1rem !important;
+}
+.p-multiselect{
+    /* margin-left: -8px !important; */
+    width: 306px !important;
+}
+.p-multiselect .p-multiselect-label {
+    padding: 0.2rem 0.2rem !important;
+    
+}
+/* marring button header */
+.button-maring{
+    margin-right: 10px !important;
+}
+/* fix chiều rộng cột chức năng */
+.function-with{
+    width: 146px;
+}
+/* fix dialog */
+.p-dialog .p-dialog-header {
+    color: #495057 !important;
+    padding: .5rem !important;
+}
+.p-button {
+
+    padding: 0.1rem .5rem !important;  
+    /* 0.5rem 1rem; */
+    font-size: 1rem;
+
+}

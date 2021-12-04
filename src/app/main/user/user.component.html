@@ -1,0 +1,246 @@
+<div class="fix-content">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-1">
+                <div class="col-sm-12">
+                    <h1>Tài khoản người dùng</h1>
+                </div>
+
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- Main content -->
+    <p-progressBar *ngIf="loading" mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
+    <section class="content" *ngIf="!loading">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-6">
+                        <button (click)="openAddModal(crudModal)" accesskey="a" type="button"
+                            class="btn btn-success btn-sm button-maring">
+                            <i class="fas fa-plus"></i>
+                            Thêm mới
+                        </button>
+                        <button (click)="loadData()" accesskey="r" type="button" class="btn btn-default btn-sm">
+                            <i class="fas fa-circle-notch"></i>
+                            Reload
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table id="tb-user" class="table table-bordered table-hover table-custom resizer">
+                    <thead>
+                        <tr>
+                            <th>Họ tên</th>
+                            <th>Năm sinh</th>
+                            <th>Giới tính</th>
+                            <th>Điện thoại</th>
+                            <th>Tên đăng nhập</th>
+                            <th>Email</th>
+                            <th class="function-with">Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of users">
+                            <td>{{user.fullName}}</td>
+                            <td>{{user.dob| date:"dd/MM/YYY"}}</td>
+                            <td>{{user.sex==true?"Nam":"Nữ"}}</td>
+                            <td>{{user.phoneNumber}}</td>
+                            <td>{{user.userName}}</td>
+                            <td> {{user.email}}</td>
+                            <td>
+
+                                <button (click)="openEditModal(user.id,crudModal)" type="button"
+                                    class="btn btn-outline-success btn-xs button-maring"><i
+                                        class="fas fa-user-edit"></i></button>
+                                <button (click)="openRoleModal(user.id,roleModal)" type="button"
+                                    class="btn btn-outline-primary btn-xs button-maring"><i
+                                        class="fas fa-user-lock"></i></button>
+                                <button type="button" class="btn btn-outline-warning btn-xs button-maring"><i
+                                        class="fas fa-exchange-alt"></i></button>
+                                <button (click)="deleteItem(user.id)" type="button"
+                                    class="btn btn-outline-danger btn-xs"><i class="fas fa-minus-circle"></i></button>
+
+
+                            </td>
+                        </tr>
+
+                    </tbody>
+                    <tfoot>
+
+                    </tfoot>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <b>Hướng dẫn</b>
+            </div>
+            <div class="card-body">
+                <button class="btn btn-outline-success btn-xs button-maring"><i class="fas fa-user-edit"></i></button>Cập nhật;
+                <button class="btn btn-outline-primary btn-xs button-maring"><i class="fas fa-user-lock"></i></button>Phân quyền;
+                <button class="btn btn-outline-warning btn-xs button-maring"><i class="fas fa-exchange-alt"></i></button>Đổi mật khẩu;
+                <button class="btn btn-outline-danger btn-xs button-maring"><i class="fas fa-minus-circle"></i></button>Xóa người dùng
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<ng-template #crudModal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">
+            <span *ngIf="add">Thêm mới</span>
+            <span *ngIf="!add">Cập nhật</span>
+        </h4>
+        <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true" class="visually-hidden">&times;</span>
+        </button>
+    </div>
+    <form [formGroup]="fUser" (ngSubmit)="fUser.valid && formSubmit()">
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-4">
+                    <label>Họ tên(*)</label>
+                </div>
+                <div class="col-8">
+                    <input formControlName="fullName" type="text" class="form-control form-control-sm"
+                        placeholder="Nguyễn Văn A">
+                    <small [hidden]="fullName.valid" class="text-danger">Họ tên bắc buộc</small>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label>Email(*)</label>
+                </div>
+                <div class="col-8">
+                    <input formControlName="email" type="text" class="form-control form-control-sm"
+                        placeholder="abc@gmail.com">
+                    <small [hidden]="email.valid" class="text-danger">Email không hợp lệ</small>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label>Điện thoại(*)</label>
+                </div>
+                <div class="col-8">
+                    <input formControlName="phoneNumber" type="text" class="form-control form-control-sm"
+                        placeholder="0123456789">
+                    <small [hidden]="phoneNumber.valid" class="text-danger">Số điện thoại không hợp lệ</small>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label>Ngày sinh(*)</label>
+                </div>
+                <div class="col-8">
+                    <input formControlName="dob" type="text" class="form-control form-control-sm"
+                        placeholder="dd/mm/yyyy" bsDatepicker [bsConfig]="{dateInputFormat: 'DD-MM-YYYY'}">
+                    <small [hidden]="dob.valid" class="text-danger">Ngày sinh không hợp lệ</small>
+                    <pre *ngIf="fUser?.value?.date" class="code-preview">{{fUser?.value?.date | date}}</pre>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label>Giới tính</label>
+                </div>
+                <div class="col-8">
+                    <p-checkbox formControlName="sex" [binary]="true"></p-checkbox>
+                </div>
+            </div>
+            <div *ngIf="add" class="row">
+                <div class="col-4">
+                    <label>Tên đăng nhập(*)</label>
+                </div>
+                <div class="col-8">
+                    <input formControlName="userName" type="text" class="form-control form-control-sm"
+                        placeholder="admin">
+                    <small [hidden]="userName.valid" class="text-danger">Tên đăng nhập ít nhất 4 ký tự</small>
+                </div>
+            </div>
+            <div *ngIf="add" class="row">
+                <div class="col-4">
+                    <label>Mật khẩu(*)</label>
+                </div>
+                <div class="col-8">
+                    <input formControlName="password" type="password" class="form-control form-control-sm"
+                        placeholder="Admin@12345">
+                    <small [hidden]="password.valid" class="text-danger">Mật khẩu ít nhất 6 ký tự, chữ thường,
+                        chữ HOA và ký tự đặt biệt.</small>
+                </div>
+            </div>
+            <div *ngIf="add" class="row">
+                <div class="col-4">
+                    <label>Nhập lại mk(*)</label>
+                </div>
+                <div class="col-8">
+                    <input formControlName="confirmPassword" type="password" class="form-control form-control-sm"
+                        placeholder="Admin@12345" validateEqual="password">
+                    <small *ngIf="fUser.errors?.identityRevealed && (fUser.touched || fUser.dirty)" class="text-danger">
+                        Xác nhận mật khẩu chưa đúng.
+                    </small>
+                </div>
+            </div>
+            <!-- <div *ngIf="add" class="row">
+                <div class="col-4">
+                    <label>Nhóm quyền(*)</label>
+                </div>
+                <div class="col-8">
+                    <p-multiSelect [options]="roles" formControlName="role" defaultLabel="Chọn nhóm" optionLabel="name"
+                        display="chip"></p-multiSelect>
+                    <small *ngIf="role.invalid" class="text-danger">Chọn nhóm phù hợp.</small>
+                </div>
+            </div> -->
+        </div>
+        <div class="modal-footer">
+            <button *ngIf="add" type="submit" class="btn btn-primary btn-sm"><i class="fa fa-save"></i> Lưu</button>
+            <button *ngIf="!add" type="submit" class="btn btn-success btn-sm"><i class="fa fa-save"></i> Cập
+                nhật</button>
+            <button (click)="fUser.reset()" type="button" class="btn btn-warning btn-sm"><i
+                    class="fa fa-circle-notch"></i> Reset</button>
+            <button (click)="closeModal()" type="button" class="btn btn-danger btn-sm"><i class="fa fa-times"></i>
+                Đóng</button>
+        </div>
+    </form>
+
+</ng-template>
+<ng-template #roleModal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">
+            <span>Cập nhật nhóm quyền</span>
+        </h4>
+        <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true" class="visually-hidden">&times;</span>
+        </button>
+    </div>
+    <form #fRole="ngForm" (ngSubmit)="fRoleSubmit()" novalidate>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-3">
+                    <label>Chọn nhóm:</label>
+                </div>
+                <div class="col-9">
+                    <div *ngFor="let item of convertRoles" class="d-inline p-2">
+                        <p-checkbox name="listRoles" [value]="item" [(ngModel)]="selectedRoles"
+                            (onChange)="onCheckboxChange($event,item)"></p-checkbox>
+
+                        <span>{{item.name}}</span>
+                        <!-- <input  type="checkbox" name="listRoles" group="g1" [value]="item" checked="false" [(ngModel)]="selectedRoles"> -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-save"></i> Cập nhật</button>
+            <button (click)="closeModal()" type="button" class="btn btn-danger btn-sm"><i class="fa fa-times"></i>
+                Đóng</button>
+        </div>
+    </form>
+
+</ng-template>
+<p-confirmDialog [style]="{width: '400px'}" position="top" [baseZIndex]="10000" key="dl1"
+    rejectButtonStyleClass="p-button-text"></p-confirmDialog>
